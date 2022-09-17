@@ -15,4 +15,4 @@
 [풀이 + 코드] https://sugared-alarm-ee1.notion.site/ad028e05b6f5442b87504034124fa26d
 
 
-질문이 있다면 edoc 오픈 채팅방이나 slack을 이용해주시기 바랍니다!
+*질문이 있다면 edoc 오픈 채팅방이나 slack 또는 epper 게시판을 이용해주시기 바랍니다!
