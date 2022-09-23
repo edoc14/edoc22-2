@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int b[200000];  // 집의 위치를 저장할 배열
+int b[200000];  // 집의 위치를 저장
 
 int compare(void *first, void *second){  // 오름차순 정렬
     return *(int*)first > *(int*)second ? 1 : -1; 
@@ -28,15 +28,11 @@ int BinarySearch(int left, int right, int c, int n) {  // 이분탐색으로 최
 }
 
 int main() {
-	int n, c, max = 0, min = 1000000001;  // n=집의 수, c=공유기 수
+	int n, c;  // n=집의 수, c=공유기 수
 	scanf("%d%d", &n, &c);
-	for (int i = 0; i < n; i++) {
-		scanf("%d", &b[i]);
-		max = b[i] > max ? b[i] : max;
-        min = b[i] < min ? b[i] : min;
-	}
+	for (int i = 0; i < n; i++) scanf("%d", &b[i]);
 	qsort(b, n, sizeof(int), compare);  // 집의 위치 정렬
-	printf("%d", BinarySearch(0, max - min, c, n));  // max - min = 최대거리
+	printf("%d", BinarySearch(0, b[n-1] - b[0], c, n));
 
 	return 0;
 }
