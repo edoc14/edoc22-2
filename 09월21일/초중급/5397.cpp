@@ -1,42 +1,45 @@
 #include <iostream>
-#include <list>
-#include <string>
+#include <deque>
 using namespace std;
-
-int N; //test case
-
-int main() {
-    cin>>N;
-
-    while(N--){
-        string str; //키로그
-        list<char> pw; //입력된 비밀번호
-        auto cursor = pw.end(); //현재 커서 위치
-
-        cin>>str;
-
-        for (auto c : str) {
-            if(c=='-') { //커서 왼쪽 삭제
-                if (cursor!=pw.begin()) {
-                    cursor = pw.erase(--cursor);
-                }
-            } else if(c=='<'){ //cursor 좌측 이동
-                if(cursor!=pw.begin()) cursor--;
-
-            } else if(c=='>'){//cursor 우측 이동
-                if(cursor!=pw.end()) cursor++;
-
-            } else { //커서 우측 삽입
-                pw.insert(cursor,c);
+deque<char> getPW(string str) {
+    deque<char> left, right;
+    for(int i=0; i<str.length(); i++) {
+        if(str[i]=='>') {
+            if(!right.empty()){
+                left.push_back(right.front());
+                right.pop_front();
             }
-
+        } else if(str[i]=='<') {
+            if(!left.empty()) {
+                right.push_front(left.back());
+                left.pop_back();
+            }
+        } else if(str[i]=='-') {
+            if(!left.empty()) {
+                left.pop_back();
+            }
+        } else {
+            left.push_back(str[i]);
         }
+    }
+    while(!right.empty()) {
+        left.push_back(right.front());
+        right.pop_front();
+    }
 
-        //비밀번호 출력
-        for (auto c : pw) {
-            cout<<c;
+    return left;
+}
+int main() {
+    int n; cin>>n;
+    while(n--) {
+        string input;
+        cin>>input;
+        deque<char> pw=getPW(input);
+        while(!pw.empty()) {
+            cout<<pw.front();
+            pw.pop_front();
         }
-        cout<<'\n';
+        cout<<"\n";
     }
     return 0;
 }
