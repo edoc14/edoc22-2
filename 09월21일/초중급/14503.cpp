@@ -1,51 +1,80 @@
 #include <iostream>
-#include <vector>
 using namespace std;
-vector<int> dx={-1, 0, 1, 0};
-vector<int> dy={0, 1, 0, -1};   //0:북, 1:동, 2:남, 3:서
 
-int clean(vector<vector<int>> &area, int n, int m, int r, int c, int d) {
-    area[r][c]=-1;  //첫번째 위치 청소
+int N,M,r,c,dir,ans=0;
 
-    int x=r, y=c, cnt=1;
-    int nx, ny, nd;
-    bool flag;  //네 방향 중 청소한 곳 유무 저장
-    while(1) {
-        flag=false;
-        for(int i=1; i<=4; i++) { //왼쪽 방향으로 4번 돌기
-            nd=(d-i+4)%4;
-            nx=x+dx[nd], ny=y+dy[nd];
-            if(0<=nx && nx<n && 0<=ny && ny<m && area[nx][ny]==0) { //청소할 공간이 있으면
-                x=nx; y=ny; d=nd; //그 방향으로 회전하고 전진하기
-                area[x][y]=-1;  //현재 위치 청소하기
-                cnt++;  //청소한 칸 1 증가
-                flag=true;
+//현재 방향으로 한 칸 전진 0:북쪽 1:동쪽 2:남쪽 3: 서쪽
+int dx[4]={-1,0,1,0};
+int dy[4]={0,1,0,-1};
+
+//현재 방향에서 한 칸 후진 0:북쪽 1:동쪽 2:남쪽 3: 서쪽
+int bx[4]={1,0,-1,0};
+int by[4]={0,-1,0,1};
+
+int map[55][55];
+
+int main() {
+    cin>>N>>M;
+    cin>>r>>c>>dir;
+
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < M; ++j) {
+            cin>>map[i][j];
+        }
+    }
+
+    while (true){
+        //현재 위치가 벽이 아니고 청소되지 않음
+        if(map[r][c]==0){
+            map[r][c]=2; //청소 완료
+            ans++;
+        }
+
+        bool nxt = false; //다음 위치 찾았는지 표시
+        int nxtDir,nxtX,nxtY; //다음 위치 정보 및 방향
+
+        //사방이 막혀있거나 청소되어 있을 때까지 회전
+        for (int i = 1; i < 5; ++i) {
+            //왼쪽으로 i번 회전
+            if(dir-i<0){
+                nxtDir=dir-i+4;
+            } else {
+                nxtDir=dir-i;
+            }
+
+            //한 칸 전진
+            nxtX=r+dx[nxtDir];
+            nxtY=c+dy[nxtDir];
+
+            //다음 위치가 범위 안에 있고, 청소되지 않았을 때 즉 다음으로 청소할 위치를 찾았을 때
+            if(nxtY>=0 && nxtX>=0 && nxtY<M && nxtX<N){
+                if(map[nxtX][nxtY]==0){
+                    nxt= true;
+                    break;
+                }
+            }
+
+        }
+
+        //청소할 다음 위치를 찾았을 때
+        if(nxt){
+            //좌표 이동
+            r=nxtX;
+            c=nxtY;
+            dir=nxtDir;
+        } else {
+            //뒤가 벽인지 확인
+            int backX=r+bx[dir];
+            int backY=c+by[dir];
+            if(map[backX][backY]==1){ //더이상 진행 불가
                 break;
+            } else { //한 칸 후진
+                r=backX;
+                c=backY;
             }
         }
-        if(flag) { //네 방향 중 한 곳을 청소한 경우
-            continue;   //1번으로 돌아가기
-        }
+    }
+    cout<<ans;
 
-        nx=x-dx[d]; ny=y-dy[d]; //뒤쪽 방향
-        if(0<=nx && nx<n && 0<=ny && ny<m && area[nx][ny]!=1) {
-            x=nx; y=ny; //바라보는 방향 유지한 채 한 칸 후진
-            area[x][y]=-1;  //현재 위치 청소하기
-            continue;   //2번으로 돌아가기
-        } 
-        break;
-    }
-    return cnt;
-}
-int main() {
-    int n, m; cin>>n>>m;
-    int r, c, d; cin>>r>>c>>d;
-    vector<vector<int>> area(n, vector<int>(m, 0));
-    for(int i=0; i<n; i++) {
-        for(int j=0; j<m; j++) {
-            cin>>area[i][j];
-        }
-    }
-    cout<<clean(area, n, m, r, c, d);
     return 0;
 }
