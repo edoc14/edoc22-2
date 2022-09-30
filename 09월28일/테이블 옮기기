@@ -1,0 +1,27 @@
+#pragma warning (disable:4996)
+#include <stdio.h>
+
+int n, dp[40];
+
+// dp 사용
+
+int main() {
+
+	scanf("%d", &n);
+
+	dp[0] = 1;
+	dp[1] = 1;
+
+    for (int i = 2; i <= 30; i++){
+        dp[i] = dp[i - 1] + dp[i - 2] * 2;
+    }
+
+    if (n % 2 == 1){    //중복 제거
+        printf("%d", (dp[n] + dp[(n - 1) / 2]) / 2);
+    }
+    else{   //중복 제거
+        printf("%d", (dp[n] + dp[n / 2] + dp[n / 2 - 1] * 2) / 2);
+    }
+
+	return 0;
+}
