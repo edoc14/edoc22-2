@@ -14,4 +14,4 @@
 
     학번_문제번호
 
-**출석 담당 운영진에게 Approve를 받은 후 `main`브랜치에 merge하세요.**
+**운영진에게 Approve를 받은 후 `main`브랜치에 merge하세요.**
