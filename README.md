@@ -13,9 +13,8 @@
 
 ### ex) BaeYunJu
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/aa784667-3ee1-4ff0-a6c3-81a92e544a2a/Untitled.png)
+![image](https://user-images.githubusercontent.com/112494061/193886102-131eeba7-7cec-4a13-9c41-96cd400fad07.png)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0d94a802-39c5-4fed-9e1e-30092107cfc2/Untitled.png)
 
 ### 혹시나 브랜치를 선택했을 때 폴더가 없는 경우 기존 브랜치를 삭제하고 새로 생성해주세요!!
 
