@@ -4,13 +4,13 @@
 
 ## 파일 이름 형식 : 학번_문제번호
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/57538178-b42c-476c-972a-e94d4c392f6b/Untitled.png)
+(notion://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F57538178-b42c-476c-972a-e94d4c392f6b%2FUntitled.png?table=block&id=5054f71e-9860-4e84-8b88-e2073c561065&spaceId=80de28a6-2271-4155-956f-4c09f51a170b&width=2000&userId=1b36668d-f182-487e-918e-a293fd96f400&cache=v2)
 
 # 2. edoc22-2 레포에서 개인 브랜치 선택
 
 ## 브랜치 형식 : 영문이름
 
-### ex) BaeYunJU
+### ex) BaeYunJu
 
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/aa784667-3ee1-4ff0-a6c3-81a92e544a2a/Untitled.png)
 
