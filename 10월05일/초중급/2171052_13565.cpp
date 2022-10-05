@@ -2,8 +2,7 @@
 #include <iostream>
 using namespace std;
 int arr[100][100];
-int n;
-int m;
+int n, m;
 
 void funct(int a, int b){
     
