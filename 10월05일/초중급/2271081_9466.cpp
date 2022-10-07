@@ -1,29 +1,21 @@
 #include<stdio.h>
-int flag, select[100001], visited[100001], cnt=0;
+int flag, select[100001], visit[100001], s, cnt=0; //visit: 1:visiting, -1: visited but team X, -2: visited&team O
 
-void find(int f, int p){
-	printf("[%d] %d\n",f,p);
-	if(select[p]<0){
-		flag=-2; //-2´Â ÆÀ °á¼º ¹«»êµÊ 
-		printf("flag :%d\n",flag);
-		return;
+void find(int p){
+	visit[p]=1; //1: í˜„ì¬ ë°©ë¬¸ ì¤‘
+	if(visit[select[p]]<0) flag = -1; //íŒ€ êµ¬ì„± ì‹¤íŒ¨ 
+	else if(visit[select[p]]==1){
+		 flag=-2; // íŒ€ êµ¬ì„± ì„±ê³µ
+		 s = select[p]; //ì‹œì‘ì ì´ ì–´ë”˜ì§€ sì— 
 	}
-	else if(select[p]==f){
-		flag=-1; //-1Àº ÆÀÀÌ ÀÌ¹Ì Á¤ÇØÁø °Í 
-		printf("flag :%d\n",flag);
-	} 
-	else find(f,select[p]);
-
-	select[p]=flag;
-	printf("select[%d]= %d\n",p,flag);
-	if(flag==-2){
-		cnt++;
-		printf("cnt: %d\n",cnt);	
-	} 
+	else find(select[p]);
 	
+	visit[p] = flag;
+	if(flag==-1) cnt++;
+	else if(p==s) flag=-1; //íŒ€ì„ êµ¬ì„±(flag==-2) && í‘œì‹œì™„ë£Œ=> ì´ ì „ì€ ë‹¤ íŒ€ êµ¬ì„± 
 }
 int main(){
-	int t, n, i;
+	int t, n, i, j;
 	
 	scanf("%d",&t);
 	
@@ -31,14 +23,15 @@ int main(){
 		scanf("%d",&n);
 		for(i=1; i<=n; i++){ 
 			scanf("%d",&select[i]);
-			if(i==select[i]) select[i]=-1; //ÀÚ½ÅÀÌ Áö¸ñÇÏ¸é ¹Ù·Î ÆÀ 
+			if(i==select[i]) visit[i]=-2; //ìì‹ ì´ ì§€ëª©í•˜ë©´ ë°”ë¡œ íŒ€ 
 		}
 		for(i=1; i<=n; i++){
-			if(select[i]>0){ //Á¤ÇØÁø °Ô ¾øÀ¸¸é 
-				find(i,i);
+			if(visit[i]==0){
+				find(i); 
 			}
 		}
 		printf("%d\n",cnt);
+		for(j=0; j<=n; j++) visit[j]=0;//ì´ˆê¸°í™” 
 		cnt=0;
 		t--;
 	}
