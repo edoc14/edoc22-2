@@ -1,23 +1,25 @@
-// 6x% 시간초과
-
 #include <iostream>
 #include <vector>
 using namespace std;
 
 vector<int> vec;
 int n;
+vector<bool> visit;
+vector<bool> finish;
+int cnt;
 
-bool isAlone(int idx){
-    vector<bool> visit(n+1,false);
-    int start = idx;
-    visit[start] = true;
+void isCycle(int idx){
+    visit[idx] = true;
     int nxt = vec[idx];
-    while(true){
-        if(nxt==start) return false; // 사이클 생성
-        if(nxt==vec[nxt]||visit[nxt]) return true; // 다음 사람이 자기 자신을 선택하거나 다음 사람은 이미 방문한 사람
-        visit[nxt] = true;
-        nxt = vec[nxt];
+    if(!visit[nxt]){
+        isCycle(nxt);
+    }else if(!finish[nxt]){ // 방문 했는데 사이클이 아니면 nxt까지 사이클
+        for(int i=nxt;i!=idx;i=vec[i]){ // nxt에서 idx까지 다음으로 넘어가면서 팀원세기
+            cnt++;
+        }
+        cnt++; // 자기자신
     }
+    finish[idx] = true;
 }
 
 int main(){
@@ -29,14 +31,21 @@ int main(){
         cin>>n;
         vec.clear();
         vec.assign(n+1,0);
+        visit.clear();
+        visit.assign(n+1,false);
+        finish.clear();
+        finish.assign(n+1, false);
         for(int i=1;i<=n;i++){
             cin>>vec[i];
         }
-        int cnt = 0;
+        cnt = 0;
         for(int i=1;i<=n;i++){
-            if(isAlone(i)) cnt++;
+            if(!visit[i]){
+                isCycle(i);
+            }
         }
-        cout<<cnt<<'\n';
+
+        cout<<n-cnt<<'\n';
     }
 
     return 0;
