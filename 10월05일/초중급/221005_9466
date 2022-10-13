@@ -1,0 +1,61 @@
+#pragma warning(disable:4996)
+#include <stdio.h>
+
+int teammate[100009];
+int visit[100009];	//방문했는지 체크
+int finished[100009];	//모든 경로는 순환으로 끝남. 순환이 일어났다면 (팀이 결정됐다면) 체크
+int next, cnt = 0;
+
+// 방문함 1 표시. 
+// 팀이 결성된다면 finished 배열 1: 자기 순환적인 경우, dfs(teammate[n])이 visited[n]==1인 n을 가르킬 경우  
+// 이미 다녀온 경로들도 finished 1 이 되도럭 호출 아랫부분에 fisished[n]=1; 
+
+// 호출된 함수에서 
+// 1) visit[n]==1인지. 순환 발생한 것. 
+//		1-1) finished[n]==1: 이미 팀이 있는 노드, finished 체크하기.
+//		1-2) finished[n]==0: 순환 발생, 탐색했었던 노드 전부 하나의 팀. finished 체크하기
+// 1-4-6-7-4
+
+void dfs(int now) {
+	visit[now] = 1;
+
+	if (now == teammate[now]) {	//(???) 자기 자신을 고른 경우
+		visit[now] = 1;
+		finished[now] = 1;
+	}
+	if (visit[teammate[now]] == 0) {	//방문하지 않았다면 dfs
+		dfs(teammate[now]);
+	}
+	else {
+		if (finished[teammate[now]] == 1) {	//전체 경우에서 팀인 학생 수를 뺌. 
+			cnt--;
+		}
+	}
+
+	finished[now] = 1;
+
+}
+
+int main() {
+
+	int T;
+	scanf("%d", &T);
+
+	for (int test = 0; test < T; test++) {
+
+		int n;
+		scanf("%d", &n);
+
+		for (int i = 0; i < n; i++) {
+			scanf("%d", &teammate[i]);
+		}
+		
+		cnt = n;
+		for (int i = 0; i < n; i++) {
+			dfs(teammate[i]);
+		}
+
+	}
+
+	return 0;
+}
