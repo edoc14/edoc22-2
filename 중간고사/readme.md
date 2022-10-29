@@ -4,5 +4,5 @@
 1️⃣[킹](https://www.acmicpc.net/problem/1063)</br>
 2️⃣[감소하는 수](https://www.acmicpc.net/problem/1038)
 
-##pr형식 : [중간고사]이름(조)</h2>
-##파일이름 : 학번_문제번호</h2>
+## pr형식 : [중간고사]이름(조)
+## 파일이름 : 학번_문제번호
