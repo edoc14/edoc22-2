@@ -4,6 +4,6 @@
 킹 https://www.acmicpc.net/problem/1063</br>
 감소하는 수 https://www.acmicpc.net/problem/1038
 
-<h2>pr형식</h2>
-<h3>[중간고사]이름(조)</h3>
+<h2>pr형식 : [중간고사]이름(조)</h2>
+<h2>파일이름 : 학번_문제번호</h2>
 
