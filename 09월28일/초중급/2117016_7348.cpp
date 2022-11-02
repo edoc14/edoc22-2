@@ -21,7 +21,11 @@ int main() {
             }
         }
         cout << *max_element(DPl.begin(), DPl.end()) * 10 << '\n';
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 2e227da ([성공] 0928_초중급_박민경(10))
     }
     return 0;
 }
