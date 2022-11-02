@@ -1,0 +1,48 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+
+int m, n;
+string arr[1001];
+int visited[1001][1001] = { 0, 0 };
+bool goal = false;
+
+void dfs(int y, int x) {
+    if (x<0 || x>n - 1 || y<0 || y>m - 1) return;
+    if (visited[y][x] == 1) return;
+    visited[y][x] = 1;
+
+    if (y == m - 1 && arr[y][x] == '0') {
+        goal = true;
+        cout << "YES";
+        exit(0);
+    }
+
+    if (arr[y][x] == '1') return;
+    else {
+        dfs(y + 1, x);
+        dfs(y - 1, x);
+        dfs(y, x + 1);
+        dfs(y, x - 1);
+    }
+}
+
+int main() {
+    cin >> m >> n;
+
+    for (int i = 0; i < m; i++) {
+        cin >> arr[i];
+    }
+    
+    for (int i = 0; i < n; i++) {
+        if (arr[0][i] == '0' && visited[0][i] == 0)
+            dfs(0, i);
+    }
+    if (!goal) cout << "NO";
+
+    return 0;
+}
