@@ -21,7 +21,6 @@ int main() {
             }
         }
         cout << *max_element(DPl.begin(), DPl.end()) * 10 << '\n';
-
     }
     return 0;
 }
