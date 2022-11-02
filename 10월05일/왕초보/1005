@@ -1,0 +1,50 @@
+from re import T
+from sys import stdin
+T = int(stdin.readline())
+
+def deldel(A):
+    for i in range(len(resultList)):
+        try:
+            this = resultList.index(A,i,i+1)
+            print(this,A)
+            winner.remove(this+1)
+        except:
+            pass
+
+
+for _ in range(T):
+    N = int(stdin.readline()) #참가로봇수
+    winner = [i+1 for i in range(N)]
+    Nlist = []
+    for _ in range(N):
+        Nlist.append(list(stdin.readline())[:-1])
+
+    for k in range(len(Nlist[0])): #라운드
+        resultList =[]
+        for i in range(len(winner)):# 이긴 애들의 라운드값
+            rere = winner[i]-1
+            resultList.append(Nlist[rere][k])
+        print(resultList)#
+        if "R" in resultList: # 가위바위보
+            if "S" in resultList:
+                if "P" in resultList:
+                    pass # 무승부
+                else:
+                    deldel('S')
+        elif "S" in resultList:
+            if "P" in resultList:
+                deldel('P')
+        else:
+            deldel('R')
+        print(winner)#
+
+    if len(winner) > 1: #답
+        print(0)
+    else:
+        print(winner[0])
+
+
+
+
+    
+    
