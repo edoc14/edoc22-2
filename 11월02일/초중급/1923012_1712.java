@@ -1,3 +1,4 @@
+//활동시간 중 성공
 import java.util.Scanner;
 
 public class Main {
