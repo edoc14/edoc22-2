@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
@@ -9,12 +8,8 @@ int main() {
 	cin >> A >> B >> C;
 
 	/*출력하기*/
-	if (B < C) {
-		if (A % (C - B) == 0)
-			cout << A / (C - B) + 1;
-		else
-			cout << A / (C - B);
-	}
+	if (B < C)
+		cout << A / (C - B) + 1;
 	else //손익분기점 없음.
 		cout << -1;
 
