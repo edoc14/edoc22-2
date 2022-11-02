@@ -10,10 +10,10 @@ public class BOJ_1712 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int A = 0, B = 0, C = 0;
-		A = Integer.parseInt(st.nextToken()); //°íÁ¤ºñ¿ë
-		B = Integer.parseInt(st.nextToken()); //°¡º¯ºñ¿ë
-		C = Integer.parseInt(st.nextToken()); //³ëÆ®ºÏ °¡°İ
-		int earning = C - B; //³ëÆ®ºÏ 1´ë ÆÈ ¶§¸¶´Ù ¾ò´Â ÀÌÀÍ
+		A = Integer.parseInt(st.nextToken()); //ê³ ì •ë¹„ìš©
+		B = Integer.parseInt(st.nextToken()); //ê°€ë³€ë¹„ìš©
+		C = Integer.parseInt(st.nextToken()); //ë…¸íŠ¸ë¶ ê°€ê²©
+		int earning = C - B; //ë…¸íŠ¸ë¶ 1ëŒ€ íŒ” ë•Œë§ˆë‹¤ ì–»ëŠ” ì´ìµ
 		if (earning <= 0)
 			System.out.println(-1);
 		else {
