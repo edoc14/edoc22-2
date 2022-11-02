@@ -36,4 +36,8 @@
 [풀이 + 코드] https://sugared-alarm-ee1.notion.site/ad028e05b6f5442b87504034124fa26d
 
 
+<<<<<<< HEAD
 >>>>>>> 528e2b7 (Create ReadMe.md)
+=======
+질문이 있다면 edoc 오픈 채팅방이나 slack을 이용해주시기 바랍니다!
+>>>>>>> f283d57 (Update ReadMe.md)
