@@ -37,7 +37,11 @@
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 528e2b7 (Create ReadMe.md)
 =======
 질문이 있다면 edoc 오픈 채팅방이나 slack을 이용해주시기 바랍니다!
 >>>>>>> f283d57 (Update ReadMe.md)
+=======
+*질문이 있다면 edoc 오픈 채팅방이나 slack 또는 epper 게시판을 이용해주시기 바랍니다!
+>>>>>>> 440ba0a (Update ReadMe.md)
