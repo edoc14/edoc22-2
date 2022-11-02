@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # edoc22-2
 
 # 형식
@@ -126,3 +127,6 @@ git commit -m "<commit message>"
 ```
 git push
 ```
+=======
+# edoc22-2
+>>>>>>> e1e8343 (Initial commit)
