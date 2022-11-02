@@ -7,4 +7,5 @@ int main() {
 	else  res = a / (c - b) + 1;
 	printf("%d", res);
 	return 0; 
+	
 }
