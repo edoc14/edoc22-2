@@ -1,4 +1,4 @@
-//성공한 코드임
+//성공한 코드입니다
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
