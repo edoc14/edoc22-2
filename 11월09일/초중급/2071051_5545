@@ -1,0 +1,40 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class BOJ_5545 {
+
+	public static void main(String[] args) throws IOException{
+		// TODO Auto-generated method stub
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int N = Integer.parseInt(br.readLine());     //토핑의 종류의 수
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int A = Integer.parseInt(st.nextToken());    //도우의 가격
+		int B = Integer.parseInt(st.nextToken());    //토핑의 가격
+		int C = Integer.parseInt(br.readLine());     //도우의 열량
+		int topping[] = new int [N];
+		for(int i=0;i<N;i++) {
+			topping[i] = Integer.parseInt(br.readLine());
+		}
+		int cost = A;   //kcal = A + B * 토핑 고른 개수
+		int kcal = C;   //cost = C + SUM(고른 토핑 열량)
+		//최종 답 = kcal / cost
+		Arrays.sort(topping);
+		int max = kcal/cost;
+		int temp = 0;
+		for(int i=N-1;i>=0;i--) { //현재 보고있는 topping  //i>=0 으로 0을 포함해야하는데 실수로 i>0로 함. 조심하기!
+			kcal += topping[i];  //토핑추가
+			cost += B;   //토핑 1개 개수만큼 가격 증가
+			temp = kcal/cost;
+			if(max <= temp) {
+				max = temp;
+			}
+			else
+				break;
+		}
+		System.out.println(max);
+	}
+
+}
