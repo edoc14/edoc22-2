@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 
 using namespace std;
 
@@ -8,10 +8,10 @@ int main() {
 
 	long long a, b, c;
 
-	// ÀÔ·Â
+	// ìž…ë ¥
 	cin >> a >> b >> c;
 
-	// ¼ÕÀÍºÐ±âÁ¡ ¾øÀ½
+	// ì†ìµë¶„ê¸°ì  ì—†ìŒ
 	if (b >= c) {
 		cout << -1 << "\n";
 		return 0;
