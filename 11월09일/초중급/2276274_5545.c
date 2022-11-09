@@ -8,8 +8,8 @@ int compare(void* a, void* b) { //내림차순 정렬
 int main() {
 	int n, a, b, c, t[100];
 	scanf("%d", &n);
-  scanf("%d%d", &a, &b);
-  scanf("%d", &c);
+ 	scanf("%d%d", &a, &b);
+ 	scanf("%d", &c);
 	for (int i = 0; i < n; i++) scanf("%d", &t[i]);
 	qsort(t, n, sizeof(int), compare);
 	double kcal = c, price = a;
