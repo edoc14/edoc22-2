@@ -1,7 +1,5 @@
 # 🔥11월 09일 문제 공지🔥  
 
-## 💻[Epper 대비 문제]💻
-
 ### 초중급
 [내일 할거야](https://www.acmicpc.net/problem/7983)
 [최고의 피자](https://www.acmicpc.net/problem/5545)
