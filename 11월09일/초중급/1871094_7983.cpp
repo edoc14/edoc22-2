@@ -5,37 +5,29 @@ using namespace std;
 
 struct comp {
     bool operator()(pair<int, int> a, pair<int, int> b) {
-        if (a.first == b.first) {
-            return a.second < b.second;
-        } else return a.first < b.first;
+        return a.second < b.second;
     }
 };
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-    priority_queue<pair<int, int>, vector<pair<int, int>>, comp> pq;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, comp> pq; // 제출일 기준 내림차순
     int n;
     cin >> n;
     for (int i = 0; i < n; ++i) {
         int start, end;
         cin >> start >> end;
-        pq.push({end, end - start});
+        pq.push({start, end});
     }
-    int daysLeft;
+    int daysLeft = pq.top().second - pq.top().first;
+    pq.pop();
     while (!pq.empty()) {
-        daysLeft = pq.top().second;
+        int d = pq.top().first; // d일이 걸린다
+        int t = pq.top().second; // t일까지 끝내야한다
         pq.pop();
-        while (!pq.empty()) {
-            if (pq.top().first <= daysLeft) {
-                break;
-            }
-            int gap = pq.top().first - daysLeft;
-            auto tmp = pq.top();
-            pq.pop();
-            pair<int, int> newPair = {tmp.first - gap, tmp.second - gap};
-            pq.push(newPair);
-        }
+        if (daysLeft >= t) daysLeft = t - d;
+        else daysLeft = daysLeft - d;
     }
     cout << daysLeft;
 
