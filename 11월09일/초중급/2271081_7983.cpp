@@ -2,11 +2,11 @@
 #include<stdlib.h>
 
 typedef struct TASK{
-	int s;
-	int e;
+	long long int s;
+	long long int e;
 }Task;
 Task task[1000000];
-int n, cnt=0; //task[][0]: °úÁ¦ ÃÖ´ëÇÑ ¹Ì·ğÀ» ¶§ ½ÃÀÛÀÏ [1]: ¸¶°¨ÀÏ 
+//task[][0]: ê³¼ì œ ìµœëŒ€í•œ ë¯¸ë¤˜ì„ ë•Œ ì‹œì‘ì¼ [1]: ë§ˆê°ì¼ 
 
 int compare(const void *a, const void *b){
 	Task x=*(Task *)a;
@@ -21,28 +21,31 @@ int compare(const void *a, const void *b){
 	return 0;
 }
 int main(){
-	int d,t, p=0;
+	int d,t, p=0, n;
+	long long int cnt=0; 
 	scanf("%d",&n);
 	
 	for(int i=0; i<n; i++){
 		scanf("%d%d",&d,&t); 
-		task[i].s=t-d+1; task[i].e=t;
+		task[i].s=t-d+1; task[i].e=t; //ìµœëŒ€í•œ ë¯¸ë£¬ ê³¼ì œ ì‹œì‘ì¼ê³¼ ë§ˆê°ì¼ë¡œ ì €ì¥(ë‹¤ë¥¸ ê³¼ì œ ê³ ë ¤X) 
 	}
 	qsort(task,n,sizeof(Task),compare);
 	
+	printf("\n");
 	for(int i=0; i<n; i++){
-		printf("%d %d\n",task[i].s, task[i].e);
-	}
+		printf("%lld %lld\n",task[i].s, task[i].e);
+	}printf("\n");
 	
-	for(int i=1; i<n&&task[p].e>=task[i].s; i++){
-		if(task[p].e<task[i].e){ //°ãÃÄÀÖ´Â »óÅÂ 
-			cnt += task[i].s - task[p].e + 1;
+	for(int i=1; i<n&&task[p].e>=task[i].s-1; i++){ //ë™ë–¨ì–´ì ¸ ìˆëŠ” ê²½ìš° ì œì™¸, pëŠ” ê¸°ì¤€ 
+		if(task[p].e<task[i].e){ //ê²¹ì³ìˆëŠ” ìƒíƒœ 
+			cnt += task[p].e - task[i].s + 1; 
 			p=i;
 		}
-		else{ //Å« °Å¿¡ Æ÷ÇÔµÇ¾î ÀÖ´Â »óÅÂ 
+		else{ //í° ê±°ì— í¬í•¨ë˜ì–´ ìˆëŠ” ìƒíƒœ 
 			cnt += task[i].e - task[i].s + 1;
 		}
+		printf("p: %d i: %d cnt: %lld\n",p,i,cnt);
 	}
 	
-	printf("%d",task[0].s-cnt-1);
+	printf("%lld",task[0].s-cnt-1);
 }
