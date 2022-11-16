@@ -1,0 +1,43 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+public class BOJ_2246 {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int N = Integer.parseInt(br.readLine());
+		StringTokenizer st;
+		int dist[] = new int [N];
+		int cost[] = new int [N];
+		int ans = 0;
+		boolean ck = false;
+		for(int i=0;i<N;i++) {
+			st = new StringTokenizer(br.readLine());
+			dist[i] = Integer.parseInt(st.nextToken());
+			cost[i] = Integer.parseInt(st.nextToken());
+		}
+		ArrayList<Integer> list = new ArrayList<>();
+		for(int i=0;i<N;i++) {
+			for (int cmp=0;cmp<N;cmp++) {
+				if (ck == true)
+					break;
+				if (dist[i] > dist[cmp] && cost[i] > cost[cmp])  //i가 더 멀고 i가 더 비쌈 ->탈락
+					ck = true;
+				else if(dist[i] == dist[cmp] && cost[i] > cost[cmp]) //거리는 같은데 더 비쌈
+					ck = true;
+				else if(cost[i] == cost[cmp] && dist[i] > dist[cmp]) //돈은 같은데 더 멀음
+					ck = true;
+			}
+			if (!ck)
+				++ans;
+			ck = false;
+		}
+		System.out.println(ans);
+
+	}
+
+}
