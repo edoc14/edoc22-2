@@ -1,0 +1,41 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class BOJ_4436 {
+	private static boolean isAll(boolean ck[]) {
+		for (int i=0;i<10;i++) {
+			if (ck[i] == false)
+				return false;
+		}
+		return true;
+	}
+
+	public static void main(String[] args) throws IOException{
+		// TODO Auto-generated method stub
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String input;
+		while ((input = br.readLine()) != (null)) {
+			int now = Integer.parseInt(input);
+			long k = 1;
+			boolean ck[] = new boolean[10];
+			while(true) { //만족하는 k를 찾을 때까지 돌기.
+				long temp = now * k;
+				String s_now = Long.toString(temp);
+				for(int j=0;j<s_now.length();j++) {  //now를 한 글자씩 살펴보기.
+					int idx = s_now.charAt(j) - '0';
+					if (ck[idx] == true) //이미 있는 수.
+						continue;
+					ck[idx] = true;  //없는 수는 ck배열에 등장 표시해주기
+				}
+				if (isAll(ck)) {
+					System.out.println(k);
+					break;
+				}
+				++k;
+			}
+		}
+	}
+}
