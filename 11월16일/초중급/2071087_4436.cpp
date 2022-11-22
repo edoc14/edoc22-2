@@ -1,11 +1,27 @@
 #include <iostream>
+#include <cstring>
 using namespace std;
 
+int v[10];
+
 int main() {
-	/*
-	음이 아닌 정수 n이 주어졌을 때, n, 2n, 3n, 4n, ..., kn
-	0~9까지의 숫자가 한 번 이상 나타나는 가장 작은 k를 찾아야 한다. 
-	금속의 양 n이 주어졌을 때, 위의 규칙을 지키는 이상적인 두께 k를 구하는 프로그램
-	*/
-	
+	long long int n;
+	while (cin >> n) {
+		//수를 문자열로 처리하여 앞에서부터 차례대로 살펴본다. 
+		memset(v, 0, sizeof(v));
+		long long num = n;
+		int ans = 0;
+
+		while (!(v[0] && v[1] && v[2] && v[3] && v[4] && v[5] && v[6] && v[7] && v[8] && v[9])) {
+			ans++;
+			long long nn = num;
+			//수를 10으로 나누면서 나머지를 차례대로 살펴본다.
+			while (nn > 0) {
+				v[nn % 10] = 1;
+				nn /= 10;   
+			}
+			num += n;
+		}
+		cout << ans << '\n';
+	}
 }
