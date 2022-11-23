@@ -1,0 +1,51 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class BOJ_10971 {
+
+	private static int map[][];
+	private static boolean visited[];
+	private static int N;
+	private static int min;
+	private static boolean allVisited(boolean visited[]) {
+		for(int i=0;i<N;i++) {
+			if (visited[i] == false)
+				return false;
+		}
+		return true;
+	}
+	private static void backtracking(int cost, int now, int start) {
+		if(allVisited(visited)) {
+			cost += map[now][start];
+			min = Math.min(cost, min);
+			return ;
+		}
+		for(int i=0;i<N;i++) {
+			if (visited[i] == false && map[now][i] > 0) { //i도시를 아직 방문하지 않았고 now->i로 가는 길이 있다면
+				visited[i] = true;
+				backtracking(cost + map[now][i], i, start);
+				visited[i] = false;
+			}
+		}
+	}
+	public static void main(String[] args) throws IOException{
+		// TODO Auto-generated method stub
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		N = Integer.parseInt(br.readLine());   //도시의 수
+		map = new int[N][N];
+		visited = new boolean[N];
+		min = Integer.MAX_VALUE;
+		for(int i=0;i<N;i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			for(int j=0;j<N;j++) {
+				map[i][j] = Integer.parseInt(st.nextToken());
+			}
+		}
+		for(int i=0;i<N;i++) {
+			backtracking(0, i, i);
+		}
+		System.out.println(min);
+	}
+}
