@@ -1,0 +1,90 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct CONDO{
+	int d;
+	int c;
+	int flag;
+	int si; //분류코드?
+	int ci; //가격 위주로 정렬한 후의 인덱스 값 
+}condo;
+
+int Dcompare(const void *x, const void *y){ //거리 위주 정렬 
+	condo a = *(condo *)x;
+	condo b = *(condo *)y;
+	
+	if(a.d > b.d) return 1;
+	if(a.d < b.d) return -1;
+	
+	if(a.c > b.c) return 1;
+	if(a.c < b.c) return -1;
+	
+	return 0;
+}
+int Ccompare(const void *x, const void *y){ //가격 위주 정렬 
+	condo a = *(condo *)x;
+	condo b = *(condo *)y;
+	
+	if(a.c > b.c) return 1;
+	if(a.c < b.c) return -1;
+	
+	if(a.d > b.d) return 1;
+	if(a.d < b.d) return -1;
+	
+	return 0;
+}
+int main(){
+	int n, cnt=0;
+	condo info_D[10000], info_C[10000]; //d는 거리위주로 정렬,C는 가격 위주 
+	scanf("%d",&n);
+	
+	for(int i=0; i<n; i++){
+		scanf("%d%d",&info_D[i].d,&info_D[i].c);
+		info_C[i].d = info_D[i].d;
+		info_C[i].c = info_D[i].c;
+		info_D[i].si = i; info_C[i].si = i; 
+		info_D[i].flag=1; info_C[i].flag=1;
+	}
+	
+	qsort(info_D,n,sizeof(condo),Dcompare); //거리 위주로  정렬
+	qsort(info_C,n,sizeof(condo),Ccompare); //가격  위주로 정렬
+	
+	for(int i=0; i<n; i++){
+		for(int j=0; j<n; j++){
+			if(info_D[i].si == info_C[j].si) info_D[i].ci = j;
+		}
+	}
+
+	for(int i=0; i<n; i++){ //거리가 가까울수록 비싼 숙박비인지 
+		for(int j=i-1; j>=0; j--){
+			if(info_D[i].d>info_D[j].d){ //d 같을 경우 제외 
+				if(info_D[i].c>=info_D[j].c){ //거리는 가까운데 숙박비가 같거나 싼 경우 
+					info_D[i].flag=0;
+					break;
+				}
+			}
+		}
+	} 
+
+	for(int i=0; i<n; i++){//가격이 쌀수록 더 먼지 
+		if(info_D[i].flag){ //1번 조건 충족 
+			int x = info_D[i].ci;
+			for(int j=x-1; j>=0; j--){ 
+				if(info_C[x].c>info_C[j].c){//c 같은 경우 제외 
+					if(info_C[x].d>=info_C[j].d){//가격은 싼데 거리가 같거나 가까운 경우 
+						info_D[i].flag=0;
+						break;
+					}
+				} 
+				
+			}
+		}
+	}
+
+	for(int i=0; i<n; i++){
+		if(info_D[i].flag) cnt++;
+	}
+	
+	printf("%d",cnt);
+	return 0;
+}
