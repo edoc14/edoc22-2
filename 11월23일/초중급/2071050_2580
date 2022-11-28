@@ -1,0 +1,111 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.StringTokenizer;
+
+public class BOJ_2580 {
+
+	private static int map[][];
+	private static int zero;
+	private static boolean row[][];
+	private static boolean col[][];
+	private static boolean area[][];
+	private static LinkedList<Blank> list;
+	private static class Blank{
+		int r, c;
+		public Blank(int r, int c) {
+			// TODO Auto-generated constructor stub
+			this.r = r;
+			this.c = c;
+		}
+	}
+	private static int area_set(int r, int c) {
+		if (r >= 0 && r<= 2) {
+			if (c >= 0 && c<= 2)
+				return 0;
+			else if(c >=3 && c <= 5)
+				return 1;
+			else
+				return 2;
+		}
+		
+		else if (r >= 3 && r<= 5) {
+			if (c >= 0 && c<= 2)
+				return 3;
+			else if(c >=3 && c <= 5)
+				return 4;
+			else
+				return 5;
+		}
+		else {
+			if (c >= 0 && c<= 2)
+				return 6;
+			else if(c >=3 && c <= 5)
+				return 7;
+			else
+				return 8;
+		}
+	}
+	
+	private static boolean backtracking(int depth, int size) {
+		if(depth == size) {
+			for(int i=0;i<9;i++) {
+				for (int j=0;j<9;j++) {
+					System.out.print(map[i][j]+ " ");
+				}
+				System.out.println();
+			}
+			return true;
+		}
+		int tempr = list.get(depth).r;
+		int tempc = list.get(depth).c;
+		int tempa = area_set(tempr, tempc);
+		for(int i=1;i<=9;i++) {
+			if(!row[tempr][i] && !col[tempc][i] && !area[tempa][i]) {
+				map[tempr][tempc] = i;
+				row[tempr][i] = true;
+				col[tempc][i] = true;
+				area[tempa][i] = true;
+				if(backtracking(depth + 1, size))
+					return true;
+				map[tempr][tempc] = 0;
+				row[tempr][i] = false;
+				col[tempc][i] = false;
+				area[tempa][i] = false;
+			}
+		}
+		return false;
+	}
+	public static void main(String[] args) throws IOException{
+		// TODO Auto-generated method stub
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		map = new int [9][9];
+		row = new boolean [9][10];
+		col = new boolean [9][10];
+		area = new boolean [9][10];
+		list = new LinkedList<>();
+		int depth = 0;
+		for(int i=0;i<9;i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
+			for (int j=0;j<9;j++)
+			{
+				int val = Integer.parseInt(st.nextToken());
+				map[i][j] = val;
+				if (val == 0)
+				{
+					list.add(new Blank(i,j));
+				}
+				else {
+					row[i][val] = true;
+					col[j][val] = true;
+					area[area_set(i, j)][val] = true;
+				}
+			}
+		}
+		int size = list.size();
+		backtracking(depth, size);
+	}
+
+}
