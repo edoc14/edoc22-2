@@ -1,126 +1,85 @@
-#include <iostream>
-#include <vector>
-#include <queue>
+ï»¿#include <iostream>
 
 using namespace std;
 
-int check_row[9][10] = { 0, };
-int check_col[9][10] = { 0, };
-int check_square[9][10] = { 0, };
+int sudoku[10][10];
 
-vector<vector<int>> board(9, vector<int>(9, 0));
-vector<vector<int>> answer(9, vector<int>(9, 0));
+bool check_row[10][10]; // í–‰ ê²€ì‚¬ : xí–‰ì— ìˆ«ì yê°€ ìˆìœ¼ë©´ true
+bool check_col[10][10]; // ì—´ ê²€ì‚¬ : xì—´ì— ìˆ«ì yê°€ ìˆìœ¼ë©´ true
+bool check_square[10][10]; // ì‘ì€ ì •ì‚¬ê°í˜• ê²€ì‚¬ : xë²ˆì§¸ ì‘ì€ ì •ì‚¬ê°í˜•ì— ìˆ«ì yê°€ ìˆìœ¼ë©´ true
 
-vector<pair<int, int>> blank_position;
-
-int find_square(int i, int j) {
-	int a = 0, b = 0;
-	switch (i) {
-	case 0:
-	case 1:
-	case 2:
-		a = 0;
-		break;
-	case 3:
-	case 4:
-	case 5:
-		a = 3;
-		break;
-	case 6:
-	case 7:
-	case 8:
-		a = 6;
-		break;
-	}
-	
-	switch (j) {
-	case 0:
-	case 1:
-	case 2:
-		b = 0;
-		break;
-	case 3:
-	case 4:
-	case 5:
-		b = 1;
-		break;
-	case 6:
-	case 7:
-	case 8:
-		b = 2;
-		break;
-	}
-	return a + b;
+// rowí–‰ colì—´ì´ ì†í•˜ëŠ” ì‘ì€ ì •ì‚¬ê°í˜• êµ¬í•˜ê¸°
+int get_square(int row, int col) {
+    return (row / 3) * 3 + (col / 3);
 }
 
-bool backtracking(int cur, int size) {
-	// ºóÄ­ ´Ù Ã¤¿ò
-	if (cur == size) {
-		return true;
-	}
-
-	int row = blank_position[cur].first;
-	int col = blank_position[cur].second;
-	int square = find_square(row, col);
-
-	// ºó Ä­¿¡ 1ºÎÅÍ 9±îÁö ³Ö¾î¼­ Á¶°Ç ÃæÁ·ÇÏ´ÂÁö check
-	for (int num = 1; num < 10; num++) {
-		// ÀÏ´Ü °ãÄ¡´Â ¼ıÀÚ°¡ °¡·Î, ¼¼·Î, »ç°¢Çü ³»¿¡ ¾øÀ¸¸é
-		if (!check_row[row][num] && !check_col[col][num] && !check_square[square][num]) {
-			// ¿ì¼± 1·Î check Ç¥½Ã
-			check_row[row][num] = 1;
-			check_col[col][num] = 1;
-			check_square[square][num] = 1;
-
-			// Á¤´ä Ä­ Ã¤¿ì±â
-			answer[row][col] = num;
-
-			if (backtracking(cur + 1, size)) {
-				return false; // Á¾·á
-			}
-			// ÃÊ±âÈ­
-			check_row[row][num] = 0;
-			check_col[col][num] = 0;
-			check_square[square][num] = 0;
-			answer[row][col] = 0;
-		}
-	}
-	return false;
+// sudoku ì¶œë ¥
+void print() {
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            cout << sudoku[i][j] << ' ';
+        }
+        cout << '\n';
+    }
 }
 
-int main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL); cout.tie(NULL);
+// numë²ˆì§¸ ìŠ¤ë„ì¿  êµ¬í•˜ê¸°
+bool solve(int num) {
+    // ë§ˆì§€ë§‰ ì¹¸ì¸ ê²½ìš° -> ì¶œë ¥ í›„ ì¢…ë£Œ
+    if (num == 81) {
+        print();
+        return true;
+    }
 
-	for (int i = 0; i < 9; i++) {
-		for (int j = 0; j < 9; j++)
-			cin >> board[i][j];
-	}
+    // í–‰, ì—´ êµ¬í•˜ê¸°
+    int x = num / 9; int y = num % 9;
 
-	answer.assign(board.begin(), board.end()); // answer¿¡ ÇöÀç »óÅÂ ÀúÀå
-	// ÇöÀç »óÅÂ check
-	for (int i = 0; i < 9; i++) {
-		for (int j = 0; j < 9; j++) {
-			// ºóÄ­ÀÌ¸é blank_position¿¡ ÁÂÇ¥ Ãß°¡
-			if (board[i][j] == 0) {
-				blank_position.push_back({ i, j });
-			}
-			// ¾Æ´Ï¸é check ¹è¿­µé¿¡ 1 Ç¥½Ã
-			else {
-				check_row[i][board[i][j]] = 1;
-				check_col[j][board[i][j]] = 1;
-				check_square[find_square(i, j)][board[i][j]] = 1;
-			}
-		}
-	}
+    if (sudoku[x][y] != 0) {
+        // ìˆ˜ê°€ ìˆìœ¼ë©´ -> ë‹¤ìŒ ìˆ˜ë¡œ ë„˜ì–´ê°€ê¸°
+        return solve(num + 1);
+    }
+    else {
+        // ìˆ˜ê°€ ì—†ìœ¼ë©´ -> 1~9 ê²€ì‚¬í•´ì„œ ìˆ˜ ì±„ìš°ê¸°
+        for (int i = 1; i <= 9; i++) {
+            if (!check_row[x][i] && !check_col[y][i] && !check_square[get_square(x, y)][i]) {
+                // ìŠ¤ë„ì¿  ì²˜ë¦¬
+                check_row[x][i] = true;
+                check_col[y][i] = true;
+                check_square[get_square(x, y)][i] = true;
+                sudoku[x][y] = i;
 
-	backtracking(0, blank_position.size());
+                if (solve(num + 1)) {
+                    return true;
+                }
 
-	for (int i = 0; i < 9; i++) {
-		for (int j = 0; j < 9; j++)
-			cout << answer[i][j] << " ";
-		cout << "\n";
-	}
+                // ë‹¤ì‹œ ëŒë ¤ë†“ê¸° (ë°±íŠ¸ë˜í‚¹)
+                check_row[x][i] = false;
+                check_col[y][i] = false;
+                check_square[get_square(x, y)][i] = false;
+                sudoku[x][y] = 0;
+            }
+        }
+    }
 
-	return 0;
+    return false;
+}
+
+int main(void) {
+
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            cin >> sudoku[i][j];
+
+            // ë¹ˆì¹¸ì´ ì•„ë‹Œ ê²½ìš° ì²˜ë¦¬
+            if (sudoku[i][j] != 0) {
+                check_row[i][sudoku[i][j]] = true;
+                check_col[j][sudoku[i][j]] = true;
+                check_square[get_square(i, j)][sudoku[i][j]] = true;
+            }
+        }
+    }
+
+    // 0ë²ˆ ì¹¸ë¶€í„° ì±„ìš°ê¸° ì‹œì‘
+    solve(0);
+    return 0;
 }
